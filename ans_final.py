@@ -20,9 +20,9 @@ t.fillNA(mergeTest,0,True)
 
 
 ### Dropping Attempts , Tags , Country , problem id , user id
-X = merge.drop(['attempts_range' , 'tags' ,'problem_id' ,'user_id','country'],axis = 1)
+X = merge.drop(['attempts_range','problem_id' ,'user_id'],axis = 1)
 Y = merge.attempts_range
-mergeTest = mergeTest.drop(['tags','ID','problem_id' ,'user_id','country'],axis = 1)
+mergeTest = mergeTest.drop(['ID','problem_id' ,'user_id'],axis = 1)
 
 ### SPLITTING
 X_train , X_test , y_train ,y_test = t.Spilt(X,Y,0.8,0)
@@ -33,7 +33,7 @@ categorical_features_indices = t.np.where(X.dtypes != t.np.float)[0]
 ## Doing CatBoost
 ##Quantile, LogLinQuantile, Poisson, MAPE, R2.
 ##Logloss, CrossEntropy, MultiClass, MultiClassOneVsAll, AUC, Accuracy, Precision, Recall, F1, TotalF1, MCC or custom objective object
-model = t.CatRegressor(1000,7,0.1,'Quantile' , X_train , y_train , categorical_features_indices,X_test,y_test)
+model = t.CatRegressor(1000,7,0.1,'RMSE' , X_train , y_train , categorical_features_indices,X_test,y_test)
 
 submission = t.pd.DataFrame()
 submission['ID'] = test_csv['ID']
